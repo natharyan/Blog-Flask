@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail 
 import json
 from datetime import datetime
 import pymysql
@@ -11,6 +12,14 @@ with open('config.json','r') as c:
 
 db = SQLAlchemy()
 app = Flask(__name__)
+app.config.update(
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = '465',
+    MAIL_USE_SSL = True,
+    MAIL_USERNAME = params['gmail-user'],
+    MAIL_PASSWORD = params['gmail-AppPassword']
+)
+mail = Mail(app)
 if local_server:
     app.config["SQLALCHEMY_DATABASE_URI"] = params['local_uri']
 else:
@@ -26,9 +35,19 @@ class Contacts(db.Model):
     date = db.Column(db.String(12), nullable=True)
     email = db.Column(db.String(20), nullable=False)
 
+class Posts(db.Model):
+    sno = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    author = db.Column(db.String, nullable=False)
+    slug = db.Column(db.String(12), nullable=False)
+    content = db.Column(db.String, nullable=False)
+    date = db.Column(db.String(12), nullable=True)
+    img_file = db.Column(db.String(12), nullable=True)
+
 @app.route("/")
-def hello():
-    return render_template('index.html', params = params)
+def home():
+    posts = Posts.query.filter_by().all()
+    return render_template('index.html', params = params, posts = posts)
 
 @app.route("/about")
 def about():
@@ -44,10 +63,12 @@ def contact():
         entry = Contacts(name = name, phone_num = phone, msg = message, date = datetime.now(), email = email)
         db.session.add(entry)
         db.session.commit()
+        mail.send_message('New message from Blog', sender = email, recipients = [params['gmail-user']], body = 'name: ' + name + '\n' + 'message:' + '\n' + message + '\n' + 'phone: ' + phone)
     return render_template('contact.html', params = params)
 
-@app.route("/post")
-def post():
-    return render_template('post.html', params = params)
+@app.route("/post/<string:post_slug>", methods = ['GET'])
+def post_route(post_slug):
+    post = Posts.query.filter_by(slug = post_slug).first()
+    return render_template('post.html', params = params, post = post)
 
 app.run(debug=True)

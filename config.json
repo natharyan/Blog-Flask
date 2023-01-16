@@ -3,6 +3,13 @@
     {
         "local_server": "True",
         "local_uri": "mysql://root:@localhost/blog_flask",
-        "prod_uri": "mysql://root:@localhost/blog_flask"
+        "prod_uri": "mysql://root:@localhost/blog_flask",
+        "fb_url": "https://www.facebook.com",
+        "tw_url": "https://www.twitter.com",
+        "gh_url": "https://www.github.com",
+        "gmail-user": "theflaskblog@gmail.com",
+        "gmail-AppPassword": "jspzjlqbwltscgzz",
+        "about_text": "Hi my name is Aryan and I am a good boy",
+        "no_of_posts": 5
     }
 }
