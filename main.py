@@ -114,6 +114,15 @@ def uploader():
 def logout():
     session.pop('user')
     return redirect('/dashboard')
+
+@app.route("/delete/<string:sno>")
+def delete(sno):
+    if 'user' in session and session['user'] == params['admin_user']:
+        post = Posts.query.filter_by(sno = sno).first()
+        db.session.delete(post)
+        db.session.commit()
+    return redirect('/dashboard')
+
 @app.route("/contact", methods = ['GET','POST'])
 def contact():
     if request.method=='POST':
