@@ -13,6 +13,8 @@ Blog made using Flask
 1. run `FLASK_APP=main.py`
 2. run `FLASK_DEBUG=True` (optional)
 3. run `flask run`
+* Admin Panel Access: `127.0.0.1:(localhost_branch)/dashboard`
+* Gmail: feel free to use the gmail account provided in config.json or add your own account (Resource: [Create & use App Passwords](https://support.google.com/mail/answer/185833?hl=en))
 
 ## Contributing
 
