@@ -11,7 +11,7 @@ Blog made using Flask
 ## Usage
 
 1. import [posts.sql](posts.sql) into your sql server
-2. change ***"upload_location"*** in [config.json](config.json) to your [static](static) path
+2. change **"upload_location"** in [config.json](config.json) to your [static](static) path
 3. run `FLASK_APP=main.py`
 4. run `FLASK_DEBUG=True` (optional)
 5. run `flask run`
