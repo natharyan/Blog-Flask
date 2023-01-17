@@ -1,14 +1,11 @@
-<snippet>
-  <content><![CDATA[
-
-# ${1:Blog1}
+# 1:Blog1
 
 Blog made using Flask
 
 ## Installation
 
 1. Clone this repository: `git clone https://github.com/natharyan/Blog1.git`
-2. Activate your virtualenv(optional)
+2. (optional) Activate a [Virtual Environment](https://startbootstrap.com/theme/clean-blog): `python3 -m venv “__virtualenv_name__”`
 3. run: `pip install -r requirements.txt` in your shell
 
 ## Usage
@@ -28,7 +25,3 @@ Blog made using Flask
 ## Credits
 
 Design reference: [Clean Blog](https://startbootstrap.com/theme/clean-blog)
-
-</content>
-<tabTrigger>readme</tabTrigger>
-</snippet>
