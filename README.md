@@ -28,4 +28,4 @@ Blog made using Flask
 
 ## Credits
 
-Design reference: [Clean Blog](https://startbootstrap.com/theme/clean-blog)
+Design reference: [Clean Blog](https://startbootstrap.com/theme/clean-blog){:target="_blank" rel="noopener"}
