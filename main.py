@@ -110,6 +110,10 @@ def uploader():
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
             return "Uploaded Successfully"
 
+@app.route("/logout")
+def logout():
+    session.pop('user')
+    return redirect('/dashboard')
 @app.route("/contact", methods = ['GET','POST'])
 def contact():
     if request.method=='POST':
