@@ -10,10 +10,11 @@ Blog made using Flask
 
 ## Usage
 
-1. import posts.sql into your sql server
-2. run `FLASK_APP=main.py`
-3. run `FLASK_DEBUG=True` (optional)
-4. run `flask run`
+1. import [posts.sql](posts.sql) into your sql server
+2. change ***"upload_location"*** in [config.json](config.json) to your [static](static) path
+3. run `FLASK_APP=main.py`
+4. run `FLASK_DEBUG=True` (optional)
+5. run `flask run`
 * Admin Panel Access: `127.0.0.1:(localhost_branch)/dashboard`
 * Gmail: feel free to use the gmail account provided in config.json or add your own account (Resource: [Create & use App Passwords](https://support.google.com/mail/answer/185833?hl=en))
 
