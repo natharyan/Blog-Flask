@@ -14,6 +14,7 @@
         "blog_name": "Blog",
         "login_image": "dashboard.png",
         "admin_user": "flask_blog",
-        "admin_password": "flaskblogpwd"
+        "admin_password": "flaskblogpwd",
+        "upload_location": "/Users/aryannath/Desktop/Programming/Self_Learning/Flask/static/assets/img"
     }
 }

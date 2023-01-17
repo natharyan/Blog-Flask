@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
 from flask_mail import Mail 
 import json
+import os
 from datetime import datetime
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -13,6 +15,7 @@ with open('config.json','r') as c:
 db = SQLAlchemy()
 app = Flask(__name__)
 app.secret_key = 'super-secret-key'
+app.config['UPLOAD_FOLDER'] = params['upload_location']
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = '465',
@@ -43,7 +46,7 @@ class Posts(db.Model):
     slug = db.Column(db.String(12), nullable=False)
     content = db.Column(db.String, nullable=False)
     date = db.Column(db.String(12), nullable=True)
-    img_file = db.Column(db.String(12), nullable=True)
+    img_file = db.Column(db.String(12), nullable=False)
 
 @app.route("/")
 def home():
@@ -65,6 +68,7 @@ def dashboard():
         userpass = request.form.get('pass')
         if username == params['admin_user'] and userpass == params['admin_password']:
             # set the session variable
+            session['user'] = username
             posts = Posts.query.all()
             return render_template('dashboard.html', params = params, posts = posts)
     
@@ -74,7 +78,37 @@ def dashboard():
 def edit(sno):
     if 'user' in session and session['user'] == params['admin_user']:
         if request.method == 'POST':
-            box_title = request.form.get('title')
+            title = request.form.get('title')
+            author = request.form.get('author')
+            slug = request.form.get('slug')
+            content = request.form.get('content')
+            img_file = request.form.get('img_file')
+            date = datetime.now()
+            if sno=='0':
+                post = Posts(title = title, author = author, slug = slug, content = content, img_file = img_file, date = date)
+                db.session.add(post)
+                db.session.commit()
+            else:
+                post = Posts.query.filter_by(sno = sno).first()
+                post.title = title
+                post.author = author
+                post.slug = slug
+                post.content = content
+                post.img_file = img_file
+                post.date = date
+                db.session.commit()
+                return redirect('/edit/' + sno)
+        post = Posts.query.filter_by(sno = sno).first()
+        return render_template('edit.html', params = params, post = post)
+    return "<h3>Please log in and try again</h3>"
+
+@app.route("/uploader", methods = ['GET','POST'])
+def uploader():
+    if 'user' in session and session['user'] == params['admin_user']:
+        if request.method=='POST':
+            f = request.files['file1']
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+            return "Uploaded Successfully"
 
 @app.route("/contact", methods = ['GET','POST'])
 def contact():
