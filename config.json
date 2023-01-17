@@ -10,6 +10,10 @@
         "gmail-user": "theflaskblog@gmail.com",
         "gmail-AppPassword": "jspzjlqbwltscgzz",
         "about_text": "Hi my name is Aryan and I am a good boy",
-        "no_of_posts": 5
+        "no_of_posts": 5,
+        "blog_name": "Blog",
+        "login_image": "dashboard.png",
+        "admin_user": "flask_blog",
+        "admin_password": "flaskblogpwd"
     }
 }

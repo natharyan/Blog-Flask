@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail 
 import json
@@ -12,6 +12,7 @@ with open('config.json','r') as c:
 
 db = SQLAlchemy()
 app = Flask(__name__)
+app.secret_key = 'super-secret-key'
 app.config.update(
     MAIL_SERVER = 'smtp.gmail.com',
     MAIL_PORT = '465',
@@ -46,12 +47,28 @@ class Posts(db.Model):
 
 @app.route("/")
 def home():
-    posts = Posts.query.filter_by().all()
+    posts = Posts.query.filter_by().limit(params['no_of_posts']).all()
     return render_template('index.html', params = params, posts = posts)
 
 @app.route("/about")
 def about():
     return render_template('about.html', params = params)
+
+@app.route("/dashboard", methods = ['GET', 'POST'])
+def dashboard():
+    if 'user' in session and session['user'] == params['admin_user']:
+        posts = Posts.query.all()
+        return render_template('dashboard.html', params = params, posts = posts)
+    if request.method == 'POST':
+        # redirect to admin panel
+        username = request.form.get('uname')
+        userpass = request.form.get('pass')
+        if username == params['admin_user'] and userpass == params['admin_password']:
+            # set the session variable
+            posts = Posts.query.all()
+            return render_template('dashboard.html', params = params, posts = posts)
+    
+    return render_template('login.html', params = params)
 
 @app.route("/contact", methods = ['GET','POST'])
 def contact():
