@@ -19,7 +19,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <h1>Upload a file</h1>
-                        /fileuploader
+                        /fileupload
                     <h1>Edit Posts</h1>
                     <table class="table table-striped">
                         <thead>
@@ -39,8 +39,8 @@
                                 <td>{{post.title}}</td>
                                 <td>{{post.author}}</td>
                                 <td>{{post.date.strftime("%B")}} {{post.date.strftime("%d")}}, {{post.date.strftime("%Y")}}</td>
-                                <td><button class="btn btn-primary">Edit</button></td>
-                                <td><button class="btn btn-primary">Delete</button></td>
+                                <td><a href="/edit/{{post.sno}}" role="button" class="btn btn-primary">Edit</a></td>
+                                <td><a href="/delete/{{post.sno}}" role="button" class="btn btn-primary">Delete</a></td>
                             </tr>
                           {% endfor %}
                         </tbody>
