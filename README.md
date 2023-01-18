@@ -1,4 +1,4 @@
-# Blog1
+# Blog-Flask
 
 Blog made using Flask
 
